@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Calculator Test - Pairahan</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pairahan by Amreen - Product Catalogue</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+    header { background: #b58863; color: white; padding: 20px; text-align: center; }
+    h1 { margin: 0; font-size: 28px; }
+    .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+    .card { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .card img { width: 100%; border-radius: 8px; }
+    .card h2 { font-size: 18px; margin: 10px 0 5px; }
+    .card p { margin: 5px 0; font-size: 14px; color: #555; }
+    .price { font-weight: bold; margin-top: 10px; font-size: 16px; color: #b58863; }
+    footer { text-align: center; padding: 10px; background: #222; color: #fff; font-size: 13px; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/tabletop.min.js"></script>
 </head>
 <body>
-  <h1>Simple Calculator Test</h1>
-  <p>This is a test deployment for Pairahan by Amreen.</p>
+
+<header>
+  <h1>Pairahan by Amreen</h1>
+  <p>Authentic Lucknowi Chikankari Collection</p>
+</header>
+
+<div class="container" id="products"></div>
+
+<footer>
+  &copy; 2025 Pairahan by Amreen | All rights reserved.
+</footer>
+
+<script>
+  window.onload = function() {
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1AfsYtgGQ48xa2JtM8MiP81scRSyUDGm0HmhiBg3zOeE/pubhtml';
+
+    Tabletop.init({
+      key: publicSpreadsheetUrl,
+      callback: showInfo,
+      simpleSheet: true
+    });
+
+    function showInfo(data) {
+      const container = document.getElementById('products');
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const img = document.createElement('img');
+        img.src = 'images/' + item["IMAGE NAME"];
+
+        const title = document.createElement('h2');
+        title.textContent = item["PRODUCT NAME"];
+
+        const fabric = document.createElement('p');
+        fabric.innerHTML = '<strong>Fabric:</strong> ' + item["FABRIC"];
+
+        const sizes = document.createElement('p');
+        sizes.innerHTML = '<strong>Sizes:</strong> ' + item["SIZE CHART"];
+
+        const color = document.createElement('p');
+        color.innerHTML = '<strong>Color:</strong> ' + item["COLOUR VARINTS"];
+
+        const price = document.createElement('p');
+        price.className = 'price';
+        price.innerHTML = '?' + item["SELLING PRICE"] + ' <del>?' + item["MRP"] + '</del>';
+
+        card.appendChild(img);
+        card.appendChild(title);
+        card.appendChild(fabric);
+        card.appendChild(sizes);
+        card.appendChild(color);
+        card.appendChild(price);
+
+        container.appendChild(card);
+      });
+    }
+  }
+</script>
+
 </body>
 </html>
