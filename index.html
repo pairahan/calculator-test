@@ -33,7 +33,7 @@
 
 <script>
   window.onload = function() {
-    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1AfsYtgGQ48xa2JtM8MiP81scRSyUDGm0HmhiBg3zOeE/pubhtml';
+    const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRApM2a5c5yAVeV1eg_3gR6ZEP84YJ4Y6SgOifH0bhjVVuFqPBXMKpP7KZPczChSA/pub?output=csv';
 
     Tabletop.init({
       key: publicSpreadsheetUrl,
@@ -43,6 +43,8 @@
 
     function showInfo(data) {
       const container = document.getElementById('products');
+      container.innerHTML = '';  // Clear previous content
+
       data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
@@ -51,20 +53,20 @@
         img.src = 'images/' + item["IMAGE NAME"];
 
         const title = document.createElement('h2');
-        title.textContent = item["PRODUCT NAME"];
+        title.textContent = item["PRODUCT NAME"] || '';
 
         const fabric = document.createElement('p');
-        fabric.innerHTML = '<strong>Fabric:</strong> ' + item["FABRIC"];
+        fabric.innerHTML = '<strong>Fabric:</strong> ' + (item["FABRIC"] || '');
 
         const sizes = document.createElement('p');
-        sizes.innerHTML = '<strong>Sizes:</strong> ' + item["SIZE CHART"];
+        sizes.innerHTML = '<strong>Sizes:</strong> ' + (item["SIZE CHART"] || '');
 
         const color = document.createElement('p');
-        color.innerHTML = '<strong>Color:</strong> ' + item["COLOUR VARINTS"];
+        color.innerHTML = '<strong>Color:</strong> ' + (item["COLOUR VARINTS"] || '');
 
         const price = document.createElement('p');
         price.className = 'price';
-        price.innerHTML = '?' + item["SELLING PRICE"] + ' <del>?' + item["MRP"] + '</del>';
+        price.innerHTML = '₹' + (item["SELLING PRICE"] || '') + ' <del>₹' + (item["MRP"] || '') + '</del>';
 
         card.appendChild(img);
         card.appendChild(title);
